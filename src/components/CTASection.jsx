@@ -1,4 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 function CTASection() {
+
+  const navigate = useNavigate();
+
+  const handleStartPlanning = () => {
+    navigate("/planner");
+  };
+
   return (
     <section className="bg-slate-950 py-28">
 
@@ -11,24 +20,18 @@ function CTASection() {
           <div className="flex items-center gap-8">
 
             <div className="w-28 h-28 rounded-3xl bg-white/10 flex items-center justify-center text-6xl backdrop-blur-md">
-
               🎓
-
             </div>
 
             <div>
 
               <h2 className="text-4xl font-bold text-white">
-
                 Ready to Achieve Your Goal?
-
               </h2>
 
               <p className="text-blue-100 mt-4 text-lg leading-8 max-w-xl">
-
                 Start planning today and take the first step
                 towards your dream CGPA with our smart academic planner.
-
               </p>
 
             </div>
@@ -37,10 +40,11 @@ function CTASection() {
 
           {/* Button */}
 
-          <button className="bg-white text-slate-900 px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl">
-
+          <button
+            onClick={handleStartPlanning}
+            className="bg-white text-slate-900 px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl"
+          >
             Start Planning Now →
-
           </button>
 
         </div>

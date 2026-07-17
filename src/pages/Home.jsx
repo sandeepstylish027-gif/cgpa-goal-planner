@@ -6,13 +6,13 @@ import Footer from "../components/Footer";
 
 function Home() {
   return (
-    <>
+    <main className="overflow-x-hidden bg-slate-950">
       <Hero />
       <Features />
       <HowItWorks />
       <CTASection />
       <Footer />
-    </>
+    </main>
   );
 }
 
