@@ -9,6 +9,7 @@ export const GRADE_POINTS = {
   C: 7,
   D: 6,
   E: 5,
+  F: 0,
 };
 
 /* -------------------------------------------------------------------------- */
@@ -17,68 +18,85 @@ export const GRADE_POINTS = {
 
 export const STYLE_CONFIG = {
 
-  /* ------------------------------------------------------ */
-  /* High Achievement                                       */
-  /* ------------------------------------------------------ */
+  /* ---------------------------------------------------------------------- */
+  /* High Achievement                                                       */
+  /* ---------------------------------------------------------------------- */
 
   high: {
 
     name: "High Achievement",
 
-    creditPriority: [2, 3, 4],
+    // Highest priority subjects first
+    creditPriority: [4, 3, 2],
 
-    maxPass: 1,
+    // Only these grades are allowed
+    allowedGrades: ["S", "A"],
 
-    preferredGrades: ["S", "A"],
+    // Initial grade for all subjects
+    startGrade: "S",
+
+    description:
+      "Maximum performance using only S and A grades.",
 
   },
 
-  /* ------------------------------------------------------ */
-  /* Balanced                                               */
-  /* ------------------------------------------------------ */
+  /* ---------------------------------------------------------------------- */
+  /* Balanced                                                               */
+  /* ---------------------------------------------------------------------- */
 
   balanced: {
 
     name: "Balanced",
 
-    creditPriority: [3, 2, 4],
+    creditPriority: [4, 3, 2],
 
-    maxPass: 2,
+    allowedGrades: ["S", "A", "B"],
 
-    preferredGrades: ["S", "A", "B"],
+    startGrade: "S",
+
+    description:
+      "Balanced combination of S, A and B grades.",
 
   },
 
-  /* ------------------------------------------------------ */
-  /* Realistic                                              */
-  /* ------------------------------------------------------ */
+  /* ---------------------------------------------------------------------- */
+  /* Realistic                                                              */
+  /* ---------------------------------------------------------------------- */
 
   realistic: {
 
-    name: "Realistic",
+  name: "Realistic",
 
-    creditPriority: [4, 3, 2],
+  creditPriority: [3, 2, 4],
 
-    maxPass: 3,
+  // S is now allowed
+  allowedGrades: ["S", "A", "B", "C"],
 
-    preferredGrades: ["A", "B", "C"],
+  // Start from the highest allowed grade
+  startGrade: "S",
 
-  },
+  description:
+    "Realistic recommendation using S, A, B and C grades.",
 
-  /* ------------------------------------------------------ */
-  /* Minimum Required                                       */
-  /* ------------------------------------------------------ */
+},
+  /* ---------------------------------------------------------------------- */
+  /* Minimum Required                                                       */
+  /* ---------------------------------------------------------------------- */
 
   minimum: {
 
-    name: "Minimum Required",
+  name: "Minimum Required",
 
-    creditPriority: [4, 3, 2],
+  creditPriority: [2, 3, 4],
 
-    maxPass: 5,
+  // E is now included
+  allowedGrades: ["S", "A", "B", "C", "D", "E"],
 
-    preferredGrades: ["A", "B", "C", "D", "E"],
+  startGrade: "S",
 
-  },
+  description:
+    "Lowest grades required while still achieving the target SGPA.",
+
+},
 
 };

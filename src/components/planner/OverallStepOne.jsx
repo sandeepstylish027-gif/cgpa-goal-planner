@@ -87,24 +87,41 @@ function OverallStepOne({
 
         </div>
 
-        {/* Degree Credits */}
+        {/* Completed Semesters */}
 
-        <div>
+<div>
 
-          <label className="block text-gray-300 mb-3">
-            Degree Total Credits
-          </label>
+  <label className="block text-gray-300 mb-3">
+    Completed Semesters
+  </label>
 
-          <input
-            type="number"
-            name="degreeCredits"
-            value={plannerData.degreeCredits}
-            onChange={handleChange}
-            placeholder="Eg: 160"
-            className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
-          />
+  <div className="grid grid-cols-7 gap-2">
 
-        </div>
+    {[1,2,3,4,5,6,7].map((sem) => (
+
+      <button
+        key={sem}
+        type="button"
+        onClick={() =>
+          setPlannerData(prev => ({
+            ...prev,
+            completedSemesters: sem,
+          }))
+        }
+        className={`py-3 rounded-xl font-semibold transition-all ${
+          plannerData.completedSemesters === sem
+            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+            : "bg-slate-800 border border-slate-700 text-gray-300 hover:border-blue-500"
+        }`}
+      >
+        {sem}
+      </button>
+
+    ))}
+
+  </div>
+
+</div>
 
       </div>
 

@@ -1,4 +1,6 @@
+// ==================================================
 // Grade Points Mapping
+// ==================================================
 
 export const GRADE_POINTS = {
   S: 10,
@@ -10,80 +12,92 @@ export const GRADE_POINTS = {
   F: 0,
 };
 
-// --------------------------------------------------
-// Calculate Grade Points Already Earned
-// --------------------------------------------------
-
-export function calculateCurrentGradePoints(
-  currentCGPA,
-  completedCredits
-) {
-  return currentCGPA * completedCredits;
-}
-
-// --------------------------------------------------
-// Total Grade Points Needed
-// --------------------------------------------------
-
-export function calculateTargetGradePoints(
-  targetCGPA,
-  degreeCredits
-) {
-  return targetCGPA * degreeCredits;
-}
-
-// --------------------------------------------------
-// Remaining Credits
-// --------------------------------------------------
-
-export function calculateRemainingCredits(
-  degreeCredits,
-  completedCredits
-) {
-  return degreeCredits - completedCredits;
-}
-
-// --------------------------------------------------
-// Required SGPA
-// --------------------------------------------------
+// ==================================================
+// Required SGPA Calculator
+// Calculates the SGPA required in the NEXT semester
+// to achieve the target CGPA after that semester.
+// ==================================================
 
 export function calculateRequiredSGPA(
   currentCGPA,
   completedCredits,
   targetCGPA,
-  degreeCredits
+  semesterCredits
 ) {
+  // ---------------------------------
+  // Convert all inputs to numbers
+  // ---------------------------------
 
-  const earned =
-    calculateCurrentGradePoints(
-      currentCGPA,
-      completedCredits
-    );
+  currentCGPA = Number(currentCGPA);
+  completedCredits = Number(completedCredits);
+  targetCGPA = Number(targetCGPA);
+  semesterCredits = Number(semesterCredits);
 
-  const required =
-    calculateTargetGradePoints(
-      targetCGPA,
-      degreeCredits
-    );
+  // ---------------------------------
+  // Validate Inputs
+  // ---------------------------------
 
-  const remainingCredits =
-    calculateRemainingCredits(
-      degreeCredits,
-      completedCredits
-    );
+  if (
+    Number.isNaN(currentCGPA) ||
+    Number.isNaN(completedCredits) ||
+    Number.isNaN(targetCGPA) ||
+    Number.isNaN(semesterCredits)
+  ) {
+    return null;
+  }
 
-  if (remainingCredits <= 0) return 0;
+  if (
+    currentCGPA < 0 ||
+    currentCGPA > 10 ||
+    targetCGPA < 0 ||
+    targetCGPA > 10 ||
+    completedCredits < 0 ||
+    semesterCredits <= 0
+  ) {
+    return null;
+  }
 
-  return (
-    (required - earned) /
-    remainingCredits
-  );
-  console.log(
-  calculateRequiredSGPA(
-    8.5,
-    80,
-    9.0,
-    160
-  )
-);
+  // ---------------------------------
+  // Grade Points Already Earned
+  // ---------------------------------
+
+  const earnedGradePoints =
+    currentCGPA * completedCredits;
+
+  // ---------------------------------
+  // Total Credits After Current Semester
+  // ---------------------------------
+
+  const totalCreditsAfterSemester =
+    completedCredits + semesterCredits;
+
+  // ---------------------------------
+  // Grade Points Needed To Reach Target
+  // ---------------------------------
+
+  const targetGradePoints =
+    targetCGPA * totalCreditsAfterSemester;
+
+  // ---------------------------------
+  // Required SGPA
+  // ---------------------------------
+
+  const requiredSGPA =
+    (targetGradePoints - earnedGradePoints) /
+    semesterCredits;
+
+  // ---------------------------------
+  // Impossible Target
+  // ---------------------------------
+
+  if (requiredSGPA > 10) {
+    return null;
+  }
+
+  // Already Above Target
+  if (requiredSGPA <= 0) {
+    return 0;
+  }
+
+  return Number(requiredSGPA.toFixed(2));
 }

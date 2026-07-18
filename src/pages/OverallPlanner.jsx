@@ -11,21 +11,28 @@ function OverallPlanner() {
   const [step, setStep] = useState(1);
 
   const [plannerData, setPlannerData] = useState({
-    // Step 1
+    // ===================================
+    // STEP 1
+    // ===================================
     currentCGPA: "",
     completedCredits: "",
     targetCGPA: "",
-    degreeCredits: "",
+    completedSemesters: "",
 
-    // Step 2
+    // ===================================
+    // STEP 2
+    // ===================================
     semester: "Semester 5",
-    semesterCredits: 22,
 
-    twoCredits: 2,
-    threeCredits: 4,
-    fourCredits: 1,
+    // User enters total semester credits
+    semesterCredits: "",
 
-    // ⭐ Recommendation Style (NEW)
+    // Number of subjects
+    twoCredits: 0,
+    threeCredits: 0,
+    fourCredits: 0,
+
+    // Recommendation Style
     recommendationStyle: "balanced",
   });
 
@@ -39,7 +46,6 @@ function OverallPlanner() {
           <PlannerProgress step={step} />
 
           {/* STEP 1 */}
-
           {step === 1 && (
             <OverallStepOne
               plannerData={plannerData}
@@ -49,7 +55,6 @@ function OverallPlanner() {
           )}
 
           {/* STEP 2 */}
-
           {step === 2 && (
             <OverallStepTwo
               plannerData={plannerData}
@@ -60,7 +65,6 @@ function OverallPlanner() {
           )}
 
           {/* STEP 3 */}
-
           {step === 3 && (
             <OverallResult
               plannerData={plannerData}

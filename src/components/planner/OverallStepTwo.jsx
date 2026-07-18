@@ -10,25 +10,25 @@ function OverallStepTwo({
   nextStep,
 }) {
 
+  // Credits calculated from subject distribution
   const calculatedCredits =
-    plannerData.twoCredits * 2 +
-    plannerData.threeCredits * 3 +
-    plannerData.fourCredits * 4;
+    Number(plannerData.twoCredits) * 2 +
+    Number(plannerData.threeCredits) * 3 +
+    Number(plannerData.fourCredits) * 4;
 
+  // Check if entered credits match calculated credits
   const isValid =
     Number(plannerData.semesterCredits) === calculatedCredits;
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10 shadow-xl">
 
-      {/* Heading */}
-
       <h2 className="text-3xl font-bold text-white">
         Semester Planning
       </h2>
 
       <p className="text-gray-400 mt-2">
-        Configure your upcoming semester and choose how you want the recommendation to be generated.
+        Enter your semester details and subject distribution.
       </p>
 
       {/* Semester */}
@@ -47,7 +47,7 @@ function OverallStepTwo({
               semester: e.target.value,
             }))
           }
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white focus:border-blue-500 outline-none"
+          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
         >
           <option>Semester 1</option>
           <option>Semester 2</option>
@@ -61,7 +61,7 @@ function OverallStepTwo({
 
       </div>
 
-      {/* Semester Credits */}
+      {/* User Enters Semester Credits */}
 
       <div className="mt-8">
 
@@ -78,12 +78,13 @@ function OverallStepTwo({
               semesterCredits: Number(e.target.value),
             }))
           }
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white focus:border-blue-500 outline-none"
+          placeholder="Example: 22"
+          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
         />
 
       </div>
 
-      {/* Credit Counters */}
+      {/* Subject Counters */}
 
       <div className="grid md:grid-cols-3 gap-6 mt-10">
 
@@ -133,22 +134,26 @@ function OverallStepTwo({
 
       </div>
 
-      {/* Credit Validation */}
+      {/* Validation */}
 
       {!isValid && (
-
-        <div className="mt-8 bg-red-500/10 border border-red-500 rounded-2xl p-5">
-
+        <div className="mt-6 bg-red-500/10 border border-red-500 rounded-2xl p-5">
           <h3 className="text-red-400 font-semibold">
-            ⚠ Credit Distribution Mismatch
+            Credit Distribution Mismatch
           </h3>
 
           <p className="text-red-300 mt-2">
-            The total semester credits do not match the credits calculated from your subject distribution.
+            Entered Credits : {plannerData.semesterCredits}
           </p>
 
-        </div>
+          <p className="text-red-300">
+            Calculated Credits : {calculatedCredits}
+          </p>
 
+          <p className="text-red-300 mt-2">
+            Please update your subject distribution so both values match.
+          </p>
+        </div>
       )}
 
       {/* Recommendation Style */}

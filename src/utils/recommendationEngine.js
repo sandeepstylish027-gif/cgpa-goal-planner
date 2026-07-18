@@ -4,75 +4,95 @@ import {
   GRADE_POINTS,
 } from "./recommendationStyles";
 
-/* -------------------------------------------------------------------------- */
-/* Create Engine State */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================
+   CREATE SUBJECT LIST
+=========================================================== */
 
-export function createEngineState(
+function createSubjects(
   twoCredits,
   threeCredits,
   fourCredits,
-  style = "balanced"
+  style
 ) {
+
+  const config =
+    STYLE_CONFIG[style] ??
+    STYLE_CONFIG.balanced;
+
   const subjects = buildSubjects(
     twoCredits,
     threeCredits,
     fourCredits
   );
 
-  subjects.forEach((subject) => {
-    subject.grade = "S";
+  subjects.forEach(subject => {
+    subject.grade = config.startGrade;
   });
 
-  return {
-    style,
-    subjects,
-    config: STYLE_CONFIG[style] || STYLE_CONFIG.balanced,
-  };
+  return subjects;
+
 }
 
-/* -------------------------------------------------------------------------- */
-/* Total Credits */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================
+   BASIC CALCULATIONS
+=========================================================== */
 
-export function totalCredits(subjects) {
+function totalCredits(subjects) {
+
   return subjects.reduce(
     (sum, subject) => sum + subject.credit,
     0
   );
+
 }
 
-/* -------------------------------------------------------------------------- */
-/* Total Grade Points */
-/* -------------------------------------------------------------------------- */
+function totalGradePoints(subjects) {
 
-export function totalGradePoints(subjects) {
   return subjects.reduce(
     (sum, subject) =>
       sum +
       subject.credit *
-      GRADE_POINTS[subject.grade],
+      (GRADE_POINTS[subject.grade] ?? 0),
     0
   );
+
 }
 
-/* -------------------------------------------------------------------------- */
-/* Calculate SGPA */
-/* -------------------------------------------------------------------------- */
+function calculateSGPA(subjects) {
 
-export function calculateSGPA(subjects) {
   const credits = totalCredits(subjects);
 
-  if (credits === 0) return 0;
+  if (credits === 0) {
+    return 0;
+  }
 
-  return totalGradePoints(subjects) / credits;
+  return Number(
+    (
+      totalGradePoints(subjects) /
+      credits
+    ).toFixed(2)
+  );
+
 }
 
-/* -------------------------------------------------------------------------- */
-/* Grade Summary */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================
+   CLONE
+=========================================================== */
+
+function cloneSubjects(subjects) {
+
+  return subjects.map(subject => ({
+    ...subject,
+  }));
+
+}
+
+/* ===========================================================
+   GRADE SUMMARY
+=========================================================== */
 
 export function gradeSummary(subjects) {
+
   const summary = {
     S: 0,
     A: 0,
@@ -82,221 +102,505 @@ export function gradeSummary(subjects) {
     E: 0,
   };
 
-  subjects.forEach((subject) => {
+  subjects.forEach(subject => {
     summary[subject.grade]++;
   });
 
   return summary;
+
 }
 
-/* -------------------------------------------------------------------------- */
-/* Order Subjects */
-/* -------------------------------------------------------------------------- */
+/* ===========================================================
+   ORDER SUBJECTS
+=========================================================== */
 
-export function orderedSubjects(state) {
+function orderSubjects(subjects, style) {
 
-  const priority = state.config.creditPriority;
+  const priority =
+    STYLE_CONFIG[style].creditPriority;
 
-  const ordered = [...state.subjects].sort((a, b) => {
+  return [...subjects].sort((a, b) => {
 
-    const first =
-      priority.indexOf(a.credit);
+    const pa = priority.indexOf(a.credit);
+    const pb = priority.indexOf(b.credit);
 
-    const second =
-      priority.indexOf(b.credit);
+    if (pa !== pb) {
+      return pa - pb;
+    }
 
-    if (first !== second)
-      return first - second;
-
-    return b.credit - a.credit;
+    // Keep a stable order for equal-credit subjects
+    return a.id - b.id;
 
   });
 
-  // Alternate subject order to spread grade reductions
-  const spread = [];
+}
 
-  let left = 0;
-  let right = ordered.length - 1;
+/* ===========================================================
+   ALLOWED GRADE HELPERS
+=========================================================== */
 
-  while (left <= right) {
+function getAllowedGrades(style) {
 
-    spread.push(ordered[left]);
+  return (
+    STYLE_CONFIG[style]?.allowedGrades ??
+    STYLE_CONFIG.balanced.allowedGrades
+  );
 
-    left++;
+}
 
-    if (left <= right) {
+function getNextGrade(currentGrade, allowedGrades) {
 
-      spread.push(ordered[right]);
+  const index =
+    allowedGrades.indexOf(currentGrade);
 
-      right--;
+  if (index === -1) {
+    return null;
+  }
+
+  if (index === allowedGrades.length - 1) {
+    return null;
+  }
+
+  return allowedGrades[index + 1];
+
+}
+/* ===========================================================
+   BEST SOLUTION
+=========================================================== */
+
+function createBestSolution(subjects) {
+
+  return {
+
+    difference: Number.MAX_SAFE_INTEGER,
+
+    sgpa: calculateSGPA(subjects),
+
+    subjects: cloneSubjects(subjects),
+
+  };
+
+}
+
+function calculateDifference(
+  sgpa,
+  requiredSGPA
+) {
+
+  if (sgpa < requiredSGPA) {
+    return Number.MAX_SAFE_INTEGER;
+  }
+
+  return sgpa - requiredSGPA;
+
+}
+
+function updateBestSolution(
+  best,
+  subjects,
+  sgpa,
+  requiredSGPA
+) {
+
+  const difference = calculateDifference(
+    sgpa,
+    requiredSGPA
+  );
+
+  if (difference < best.difference) {
+
+    best.difference = difference;
+
+    best.sgpa = sgpa;
+
+    best.subjects = cloneSubjects(subjects);
+
+  }
+
+}
+
+/* ===========================================================
+   TRY A SINGLE DOWNGRADE
+=========================================================== */
+
+function tryDowngrade(
+  subject,
+  subjects,
+  allowedGrades,
+  requiredSGPA,
+  best
+) {
+
+  const nextGrade = getNextGrade(
+    subject.grade,
+    allowedGrades
+  );
+
+  if (!nextGrade) {
+    return false;
+  }
+
+  const previousGrade = subject.grade;
+
+  subject.grade = nextGrade;
+
+  const sgpa = calculateSGPA(subjects);
+
+  if (sgpa >= requiredSGPA) {
+
+    updateBestSolution(
+      best,
+      subjects,
+      sgpa,
+      requiredSGPA
+    );
+
+    return true;
+
+  }
+
+  // Restore previous grade
+  subject.grade = previousGrade;
+
+  return false;
+
+}
+/* ===========================================================
+   SOLUTION COMPARISON
+=========================================================== */
+
+function countGrades(subjects) {
+  const counts = {
+    S: 0,
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0,
+    E: 0,
+  };
+
+  for (const subject of subjects) {
+    counts[subject.grade]++;
+  }
+
+  return counts;
+}
+
+function isBetterSolution(
+  candidateSubjects,
+  candidateSGPA,
+  currentBest,
+  requiredSGPA
+) {
+  if (candidateSGPA < requiredSGPA) {
+    return false;
+  }
+
+  const candidateDifference =
+    candidateSGPA - requiredSGPA;
+
+  if (
+    candidateDifference <
+    currentBest.difference - 1e-9
+  ) {
+    return true;
+  }
+
+  if (
+    Math.abs(
+      candidateDifference -
+      currentBest.difference
+    ) > 1e-9
+  ) {
+    return false;
+  }
+
+  const candidateCounts =
+    countGrades(candidateSubjects);
+
+  const bestCounts =
+    countGrades(currentBest.subjects);
+
+  // Fewer unnecessary S grades
+  if (
+    candidateCounts.S <
+    bestCounts.S
+  ) {
+    return true;
+  }
+
+  if (
+    candidateCounts.S >
+    bestCounts.S
+  ) {
+    return false;
+  }
+
+  // Prefer more A grades
+  if (
+    candidateCounts.A >
+    bestCounts.A
+  ) {
+    return true;
+  }
+
+  if (
+    candidateCounts.A <
+    bestCounts.A
+  ) {
+    return false;
+  }
+
+  return false;
+}
+
+/* ===========================================================
+   GREEDY OPTIMIZATION ENGINE
+=========================================================== */
+
+function optimizeRecommendation(
+  requiredSGPA,
+  twoCredits,
+  threeCredits,
+  fourCredits,
+  style
+) {
+
+  const subjects = orderSubjects(
+    createSubjects(
+      twoCredits,
+      threeCredits,
+      fourCredits,
+      style
+    ),
+    style
+  );
+
+  const allowedGrades = getAllowedGrades(style);
+
+  const best = createBestSolution(subjects);
+
+  const totalCreditsValue = totalCredits(subjects);
+
+  function dfs(index) {
+
+    const currentSGPA = calculateSGPA(subjects);
+
+    // If all subjects have been assigned
+    if (index === subjects.length) {
+
+      if (
+        isBetterSolution(
+          subjects,
+          currentSGPA,
+          best,
+          requiredSGPA
+        )
+      ) {
+
+        best.subjects = cloneSubjects(subjects);
+
+        best.sgpa = currentSGPA;
+
+        best.difference =
+          currentSGPA - requiredSGPA;
+
+      }
+
+      return;
+
+    }
+
+    const subject = subjects[index];
+
+    for (const grade of allowedGrades) {
+
+      subject.grade = grade;
+
+      const currentPoints =
+        totalGradePoints(subjects);
+
+      // ---------- Branch & Bound ----------
+
+      let maxPossiblePoints = currentPoints;
+
+      for (
+        let i = index + 1;
+        i < subjects.length;
+        i++
+      ) {
+
+        maxPossiblePoints +=
+          subjects[i].credit *
+          GRADE_POINTS[
+            allowedGrades[0]
+          ];
+
+      }
+
+      const maxPossibleSGPA =
+        maxPossiblePoints /
+        totalCreditsValue;
+
+      // Even giving every remaining subject the
+      // highest grade cannot reach target
+      if (
+        maxPossibleSGPA <
+        requiredSGPA
+      ) {
+        continue;
+      }
+
+      dfs(index + 1);
 
     }
 
   }
 
-  return spread;
+  dfs(0);
+
+  return best.subjects;
 
 }
+/* ===========================================================
+   VALIDATE INPUT
+=========================================================== */
 
-/* -------------------------------------------------------------------------- */
-/* Downgrade Grade */
-/* -------------------------------------------------------------------------- */
+function isValidRequiredSGPA(requiredSGPA) {
 
-function downgradeGrade(grade) {
-  switch (grade) {
-    case "S":
-      return "A";
-    case "A":
-      return "B";
-    case "B":
-      return "C";
-    case "C":
-      return "D";
-    case "D":
-      return "E";
-    default:
-      return null;
-  }
-}
-function getMaxPass(style) {
-
-  return (
-    STYLE_CONFIG[style]?.maxPass ??
-    STYLE_CONFIG.balanced.maxPass
-  );
-
-}
-
-function canDowngrade(grade, pass) {
-  switch (pass) {
-    case 1:
-      return grade === "S";
-
-    case 2:
-      return grade === "A";
-
-    case 3:
-      return grade === "B";
-
-    case 4:
-      return grade === "C";
-
-    case 5:
-      return grade === "D";
-
-    default:
-      return false;
-  }
-}
-function shouldSkipSubject(subject, style) {
-
-  switch (style) {
-
-    case "high":
-
-      return subject.credit === 4 &&
-             subject.grade === "S";
-
-    case "balanced":
-
-      return false;
-
-    case "realistic":
-
-      return false;
-
-    case "minimum":
-
-      return false;
-
-    default:
-
-      return false;
-
+  if (!Number.isFinite(requiredSGPA)) {
+    return false;
   }
 
+  if (requiredSGPA <= 0) {
+    return false;
+  }
+
+  if (requiredSGPA > 10) {
+    return false;
+  }
+
+  return true;
+
 }
+/* ===========================================================
+   BUILD RECOMMENDATION
+=========================================================== */
 
-/* -------------------------------------------------------------------------- */
-/* Recommendation Engine */
-/* -------------------------------------------------------------------------- */
-
-export function generateRecommendation(
+function buildRecommendation(
   requiredSGPA,
   twoCredits,
   threeCredits,
   fourCredits,
-  style = "balanced"
+  style
 ) {
 
-  const state = createEngineState(
+  return optimizeRecommendation(
+    requiredSGPA,
     twoCredits,
     threeCredits,
     fourCredits,
     style
   );
 
-  const subjects = orderedSubjects(state);
+}
+/* ===========================================================
+   PUBLIC API
+=========================================================== */
 
-  let currentSGPA = calculateSGPA(subjects);
+export function generateRecommendation(
 
-  // Number of downgrade passes for each style
-  const maxPass = getMaxPass(style);
+  requiredSGPA,
 
-  // Pass 1 : S -> A
-  // Pass 2 : A -> B
-  // Pass 3 : B -> C
-  // Pass 4 : C -> D
-  // Pass 5 : D -> E
+  twoCredits,
 
-  for (let pass = 1; pass <= maxPass; pass++) {
+  threeCredits,
 
-    let changed = true;
+  fourCredits,
 
-    while (changed) {
+  style = "balanced"
 
-      changed = false;
+) {
 
-      for (const subject of subjects) {
-        if (shouldSkipSubject(subject, style))
-           continue;
-
-        // Only downgrade grades allowed in this pass
-        if (!canDowngrade(subject.grade, pass))
-          continue;
-
-        const previousGrade = subject.grade;
-
-        const next = downgradeGrade(subject.grade);
-
-        if (!next)
-          continue;
-
-        subject.grade = next;
-
-        const newSGPA = calculateSGPA(subjects);
-
-        if (newSGPA >= requiredSGPA) {
-
-          currentSGPA = newSGPA;
-          changed = true;
-
-        } else {
-
-          subject.grade = previousGrade;
-
-        }
-
-      }
-
-      // Stop if we have reached the target
-      if (currentSGPA <= requiredSGPA + 0.01)
-        break;
-
-    }
-
+  // Validate required SGPA
+  if (!isValidRequiredSGPA(requiredSGPA)) {
+    return [];
   }
 
-  return subjects;
+  // Generate recommendation
+  const recommendation = buildRecommendation(
+
+    requiredSGPA,
+
+    twoCredits,
+
+    threeCredits,
+
+    fourCredits,
+
+    style
+
+  );
+  if (recommendation === null) {
+  return [];
+}
+
+  // Keep the order produced by the optimization engine
+  return recommendation;
+
+}
+
+/* ===========================================================
+   RECOMMENDATION STATISTICS
+=========================================================== */
+
+export function recommendationStatistics(subjects) {
+
+  const expectedSGPA = Number(
+    calculateSGPA(subjects).toFixed(2)
+  );
+
+  return {
+
+    totalCredits:
+      totalCredits(subjects),
+
+    totalGradePoints:
+      totalGradePoints(subjects),
+
+    expectedSGPA,
+
+    summary:
+      gradeSummary(subjects),
+
+  };
+
+}
+/* ===========================================================
+   DEBUG (OPTIONAL)
+=========================================================== */
+
+export function printRecommendation(subjects) {
+
+  console.table(
+
+    subjects.map(subject => ({
+
+      Subject: subject.id,
+
+      Credit: subject.credit,
+
+      Grade: subject.grade,
+
+      GradePoint:
+        GRADE_POINTS[subject.grade],
+
+      Points:
+        subject.credit *
+        GRADE_POINTS[subject.grade],
+
+    }))
+
+  );
 
 }

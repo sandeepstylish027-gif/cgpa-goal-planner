@@ -15,16 +15,15 @@ function OverallResult({
   backStep,
 }) {
 
-  // Calculate required SGPA
   const requiredSGPA = calculateRequiredSGPA(
     Number(plannerData.currentCGPA),
     Number(plannerData.completedCredits),
     Number(plannerData.targetCGPA),
-    Number(plannerData.degreeCredits)
+    Number(plannerData.semesterCredits)
   );
 
-  // If target is impossible
   if (
+    requiredSGPA === null ||
     !isFinite(requiredSGPA) ||
     requiredSGPA > 10
   ) {
@@ -50,16 +49,14 @@ function OverallResult({
     );
   }
 
-  // Generate recommendation
   const recommendations = generateRecommendation(
     requiredSGPA,
-    plannerData.twoCredits,
-    plannerData.threeCredits,
-    plannerData.fourCredits,
+    Number(plannerData.twoCredits),
+    Number(plannerData.threeCredits),
+    Number(plannerData.fourCredits),
     plannerData.recommendationStyle || "balanced"
   );
 
-  // Grade summary
   const summary = gradeSummary(recommendations);
 
   return (
