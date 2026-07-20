@@ -58,11 +58,11 @@ function Footer() {
               </a>
 
               <a
-                href="mailto:your@email.com"
-                className="w-11 h-11 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-blue-600 duration-300"
-              >
-                <FaEnvelope />
-              </a>
+  href="mailto:sandeepnaikbukke499@gmail.com"
+  className="w-11 h-11 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-blue-600 duration-300"
+>
+  <FaEnvelope />
+</a>
             </div>
           </div>
 
@@ -73,9 +73,9 @@ function Footer() {
             </h3>
 
             <div className="flex flex-col gap-4 text-gray-400">
-              <a href="/" className="hover:text-blue-400 duration-300">
+              <Link to="/" className="hover:text-blue-400 duration-300">
                 Home
-              </a>
+              </Link>
 
               <Link
                 to="/planner"
@@ -153,12 +153,12 @@ function Footer() {
               </a>
 
               <a
-                href="mailto:your@email.com"
-                className="flex items-center gap-3 text-gray-400 hover:text-blue-400 duration-300"
-              >
-                <FaEnvelope />
-                Email
-              </a>
+  href="mailto:sandeepnaikbukke499@gmail.com"
+  className="flex items-center gap-3 text-gray-400 hover:text-blue-400 duration-300"
+>
+  <FaEnvelope />
+  Email
+</a>
             </div>
           </div>
         </div>
