@@ -4,18 +4,50 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+/* Reset */
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Smooth Scrolling */
+
 html {
   scroll-behavior: smooth;
 }
+
+/* Body */
 
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #020617;
   color: white;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Links */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Images */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Buttons */
+
+button {
+  font-family: inherit;
+  cursor: pointer;
 }

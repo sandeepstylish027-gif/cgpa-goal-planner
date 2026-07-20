@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import Features from "../components/Features";
 import HowItWorks from "../components/HowItWorks";
 import CTASection from "../components/CTASection";
+import About from "../components/About";
 import Footer from "../components/Footer";
 
 function Home() {
@@ -11,6 +12,7 @@ function Home() {
       <Features />
       <HowItWorks />
       <CTASection />
+      <About />
       <Footer />
     </main>
   );
