@@ -48,7 +48,7 @@ function DashboardPreview() {
               </h2>
 
               <p className="text-gray-400 mt-2 text-sm lg:text-base">
-                Welcome back, Sandeep! 👋
+                Welcome back, 👋
               </p>
 
             </div>
