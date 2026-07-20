@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -5,6 +6,14 @@ import PlannerSelection from "../components/PlannerSelection";
 
 function Planner() {
   const navigate = useNavigate();
+
+  // Always start this page from the top
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }, []);
 
   return (
     <main className="min-h-screen bg-slate-950">
