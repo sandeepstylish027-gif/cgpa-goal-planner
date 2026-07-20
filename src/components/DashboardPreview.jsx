@@ -13,27 +13,27 @@ import TrendChart from "./TrendChart";
 
 function DashboardPreview() {
   return (
-    <div className="w-full max-w-[760px] rounded-[32px] border border-blue-900/40 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 shadow-[0_0_80px_rgba(59,130,246,.18)] overflow-hidden">
+    <div className="w-full max-w-[720px] mx-auto rounded-3xl border border-blue-900/40 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 shadow-[0_0_70px_rgba(59,130,246,.18)] overflow-hidden">
 
-      <div className="grid grid-cols-[60px_1fr] lg:grid-cols-[70px_1fr]">
+      <div className="grid grid-cols-[58px_1fr] sm:grid-cols-[64px_1fr] lg:grid-cols-[70px_1fr]">
 
         {/* Sidebar */}
 
-        <div className="bg-slate-950 border-r border-slate-800 flex flex-col items-center py-6 lg:py-8 gap-6 lg:gap-8">
+        <div className="bg-slate-950 border-r border-slate-800 flex flex-col items-center py-5 sm:py-6 lg:py-8 gap-5 sm:gap-6 lg:gap-8">
 
-          <FaHome className="text-blue-500 text-lg lg:text-xl" />
+          <FaHome className="text-blue-500 text-base sm:text-lg lg:text-xl" />
 
-          <FaChartLine className="text-gray-500 hover:text-white text-lg lg:text-xl cursor-pointer duration-300" />
+          <FaChartLine className="text-gray-500 hover:text-white text-base sm:text-lg lg:text-xl cursor-pointer duration-300" />
 
-          <FaCalendarAlt className="text-gray-500 hover:text-white text-lg lg:text-xl cursor-pointer duration-300" />
+          <FaCalendarAlt className="text-gray-500 hover:text-white text-base sm:text-lg lg:text-xl cursor-pointer duration-300" />
 
-          <FaBullseye className="text-gray-500 hover:text-white text-lg lg:text-xl cursor-pointer duration-300" />
+          <FaBullseye className="text-gray-500 hover:text-white text-base sm:text-lg lg:text-xl cursor-pointer duration-300" />
 
-          <FaCog className="text-gray-500 hover:text-white text-lg lg:text-xl cursor-pointer duration-300" />
+          <FaCog className="text-gray-500 hover:text-white text-base sm:text-lg lg:text-xl cursor-pointer duration-300" />
 
         </div>
 
-        {/* Main Content */}
+        {/* Main */}
 
         <div className="p-4 sm:p-6 lg:p-8">
 
@@ -43,21 +43,21 @@ function DashboardPreview() {
 
             <div>
 
-              <h2 className="text-2xl lg:text-4xl font-bold text-white">
+              <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white">
                 Dashboard
               </h2>
 
-              <p className="text-gray-400 mt-2 text-sm lg:text-base">
+              <p className="text-gray-400 mt-1 sm:mt-2 text-xs sm:text-sm lg:text-base">
                 Welcome back, 👋
               </p>
 
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
 
-              <FaBell className="text-gray-400 text-xl cursor-pointer hover:text-white duration-300" />
+              <FaBell className="text-lg sm:text-xl text-gray-400 hover:text-white duration-300 cursor-pointer" />
 
-              <FaUserCircle className="text-4xl lg:text-5xl text-blue-400" />
+              <FaUserCircle className="text-3xl sm:text-4xl lg:text-5xl text-blue-400" />
 
             </div>
 
@@ -65,7 +65,7 @@ function DashboardPreview() {
 
           {/* Stats */}
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 mt-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mt-6 sm:mt-8">
 
             <Card
               title="Current CGPA"
@@ -89,9 +89,9 @@ function DashboardPreview() {
 
           </div>
 
-          {/* Analytics */}
+          {/* Charts */}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 mt-5 sm:mt-6">
 
             <ProgressCard />
 
@@ -99,26 +99,22 @@ function DashboardPreview() {
 
           </div>
 
-          {/* Bottom Banner */}
+          {/* Banner */}
 
-          <div className="mt-6 bg-slate-800 rounded-2xl px-4 lg:px-6 py-5 flex items-start sm:items-center gap-4">
+          <div className="mt-5 sm:mt-6 bg-slate-800 rounded-2xl p-4 sm:p-5 lg:px-6 lg:py-5 flex items-start sm:items-center gap-3 sm:gap-4">
 
-            <div className="text-3xl lg:text-4xl">
+            <div className="text-2xl sm:text-3xl lg:text-4xl flex-shrink-0">
               🚀
             </div>
 
             <div>
 
-              <h3 className="text-white font-semibold text-base lg:text-lg">
-
+              <h3 className="text-white font-semibold text-sm sm:text-base lg:text-lg">
                 You're on track!
-
               </h3>
 
-              <p className="text-gray-400 text-sm lg:text-base">
-
+              <p className="text-gray-400 text-xs sm:text-sm lg:text-base mt-1">
                 Keep maintaining your performance to reach your target CGPA.
-
               </p>
 
             </div>
@@ -135,18 +131,14 @@ function DashboardPreview() {
 
 function Card({ title, value, color }) {
   return (
-    <div className="bg-slate-800 rounded-2xl p-4 lg:p-5 hover:bg-slate-700 duration-300">
+    <div className="bg-slate-800 rounded-2xl p-3 sm:p-4 lg:p-5 hover:bg-slate-700 transition-all duration-300">
 
-      <p className="text-gray-400 text-xs lg:text-sm">
-
+      <p className="text-gray-400 text-[11px] sm:text-xs lg:text-sm">
         {title}
-
       </p>
 
-      <h2 className={`mt-4 lg:mt-5 text-2xl lg:text-4xl font-bold ${color}`}>
-
+      <h2 className={`mt-3 sm:mt-4 lg:mt-5 text-xl sm:text-2xl lg:text-4xl font-bold ${color}`}>
         {value}
-
       </h2>
 
     </div>
@@ -155,30 +147,24 @@ function Card({ title, value, color }) {
 
 function CreditCard() {
   return (
-    <div className="bg-slate-800 rounded-2xl p-4 lg:p-5 hover:bg-slate-700 duration-300">
+    <div className="bg-slate-800 rounded-2xl p-3 sm:p-4 lg:p-5 hover:bg-slate-700 transition-all duration-300">
 
-      <p className="text-gray-400 text-xs lg:text-sm">
-
+      <p className="text-gray-400 text-[11px] sm:text-xs lg:text-sm">
         Credits
-
       </p>
 
-      <h2 className="mt-4 lg:mt-5 text-2xl lg:text-3xl font-bold text-white">
-
+      <h2 className="mt-3 sm:mt-4 lg:mt-5 text-xl sm:text-2xl lg:text-3xl font-bold text-white">
         80<span className="text-gray-500"> / 160</span>
-
       </h2>
 
-      <div className="mt-4 lg:mt-5 h-2 bg-slate-700 rounded-full">
+      <div className="mt-3 sm:mt-4 lg:mt-5 h-2 bg-slate-700 rounded-full overflow-hidden">
 
-        <div className="h-2 w-1/2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+        <div className="h-full w-1/2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
 
       </div>
 
-      <p className="text-xs text-gray-400 mt-2">
-
+      <p className="text-[11px] sm:text-xs text-gray-400 mt-2">
         50% Completed
-
       </p>
 
     </div>

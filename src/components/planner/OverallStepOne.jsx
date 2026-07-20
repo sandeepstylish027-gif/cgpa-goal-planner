@@ -16,23 +16,31 @@ function OverallStepOne({
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10 shadow-xl">
+    <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-8 lg:p-10 shadow-xl">
 
-      <h2 className="text-3xl font-bold text-white">
-        Basic Information
-      </h2>
+      {/* Header */}
 
-      <p className="text-gray-400 mt-2">
-        Enter your current academic details to begin planning.
-      </p>
+      <div>
 
-      <div className="grid md:grid-cols-2 gap-8 mt-10">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white">
+          Basic Information
+        </h2>
+
+        <p className="mt-2 text-sm sm:text-base text-gray-400">
+          Enter your current academic details to begin planning.
+        </p>
+
+      </div>
+
+      {/* Form */}
+
+      <div className="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
 
         {/* Current CGPA */}
 
         <div>
 
-          <label className="block text-gray-300 mb-3">
+          <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
             Current CGPA
           </label>
 
@@ -42,8 +50,8 @@ function OverallStepOne({
             name="currentCGPA"
             value={plannerData.currentCGPA}
             onChange={handleChange}
-            placeholder="Eg: 8.50"
-            className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
+            placeholder="Enter your current CGPA"
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
           />
 
         </div>
@@ -52,7 +60,7 @@ function OverallStepOne({
 
         <div>
 
-          <label className="block text-gray-300 mb-3">
+          <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
             Completed Credits
           </label>
 
@@ -61,8 +69,8 @@ function OverallStepOne({
             name="completedCredits"
             value={plannerData.completedCredits}
             onChange={handleChange}
-            placeholder="Eg: 90"
-            className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
+            placeholder="Enter completed credits"
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
           />
 
         </div>
@@ -71,7 +79,7 @@ function OverallStepOne({
 
         <div>
 
-          <label className="block text-gray-300 mb-3">
+          <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
             Target CGPA
           </label>
 
@@ -81,53 +89,59 @@ function OverallStepOne({
             name="targetCGPA"
             value={plannerData.targetCGPA}
             onChange={handleChange}
-            placeholder="Eg: 9.00"
-            className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
+            placeholder="Enter your target CGPA"
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
           />
 
         </div>
 
         {/* Completed Semesters */}
 
-<div>
+        <div>
 
-  <label className="block text-gray-300 mb-3">
-    Completed Semesters
-  </label>
+          <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
+            Completed Semesters
+          </label>
 
-  <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
 
-    {[1,2,3,4,5,6,7].map((sem) => (
+            {[1, 2, 3, 4, 5, 6, 7].map((sem) => (
 
-      <button
-        key={sem}
-        type="button"
-        onClick={() =>
-          setPlannerData(prev => ({
-            ...prev,
-            completedSemesters: sem,
-          }))
-        }
-        className={`py-3 rounded-xl font-semibold transition-all ${
-          plannerData.completedSemesters === sem
-            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-            : "bg-slate-800 border border-slate-700 text-gray-300 hover:border-blue-500"
-        }`}
-      >
-        {sem}
-      </button>
+              <button
+                key={sem}
+                type="button"
+                onClick={() =>
+                  setPlannerData((prev) => ({
+                    ...prev,
+                    completedSemesters: sem,
+                  }))
+                }
+                className={`rounded-xl py-3 text-sm sm:text-base font-semibold transition-all duration-300 ${
+                  plannerData.completedSemesters === sem
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
+                    : "border border-slate-700 bg-slate-800 text-gray-300 hover:border-blue-500 hover:text-white"
+                }`}
+              >
+                {sem}
+              </button>
 
-    ))}
+            ))}
 
-  </div>
+          </div>
 
-</div>
+        </div>
 
       </div>
 
-      <NavigationButtons
-        nextStep={nextStep}
-      />
+      {/* Navigation */}
+
+      <div className="mt-10">
+
+        <NavigationButtons
+          nextStep={nextStep}
+        />
+
+      </div>
 
     </div>
   );

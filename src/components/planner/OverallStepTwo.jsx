@@ -10,32 +10,36 @@ function OverallStepTwo({
   nextStep,
 }) {
 
-  // Credits calculated from subject distribution
   const calculatedCredits =
     Number(plannerData.twoCredits) * 2 +
     Number(plannerData.threeCredits) * 3 +
     Number(plannerData.fourCredits) * 4;
 
-  // Check if entered credits match calculated credits
   const isValid =
     Number(plannerData.semesterCredits) === calculatedCredits;
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10 shadow-xl">
+    <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-8 lg:p-10 shadow-xl">
 
-      <h2 className="text-3xl font-bold text-white">
-        Semester Planning
-      </h2>
+      {/* Header */}
 
-      <p className="text-gray-400 mt-2">
-        Enter your semester details and subject distribution.
-      </p>
+      <div>
+
+        <h2 className="text-2xl sm:text-3xl font-bold text-white">
+          Semester Planning
+        </h2>
+
+        <p className="mt-2 text-sm sm:text-base text-gray-400">
+          Enter your semester details and subject distribution.
+        </p>
+
+      </div>
 
       {/* Semester */}
 
-      <div className="mt-10">
+      <div className="mt-8 sm:mt-10">
 
-        <label className="block text-gray-300 mb-3">
+        <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
           Semester
         </label>
 
@@ -47,7 +51,7 @@ function OverallStepTwo({
               semester: e.target.value,
             }))
           }
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
+          className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white outline-none transition-all duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         >
           <option>Semester 1</option>
           <option>Semester 2</option>
@@ -61,11 +65,11 @@ function OverallStepTwo({
 
       </div>
 
-      {/* User Enters Semester Credits */}
+      {/* Semester Credits */}
 
       <div className="mt-8">
 
-        <label className="block text-gray-300 mb-3">
+        <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
           Total Semester Credits
         </label>
 
@@ -78,15 +82,15 @@ function OverallStepTwo({
               semesterCredits: Number(e.target.value),
             }))
           }
-          placeholder="Example: 22"
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500"
+          placeholder="Enter current semester credits"
+          className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         />
 
       </div>
 
       {/* Subject Counters */}
 
-      <div className="grid md:grid-cols-3 gap-6 mt-10">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
 
         <CreditCounter
           title="2 Credit Subjects"
@@ -137,35 +141,50 @@ function OverallStepTwo({
       {/* Validation */}
 
       {!isValid && (
-        <div className="mt-6 bg-red-500/10 border border-red-500 rounded-2xl p-5">
-          <h3 className="text-red-400 font-semibold">
+
+        <div className="mt-8 rounded-2xl border border-red-500/40 bg-red-500/10 p-5">
+
+          <h3 className="text-lg font-semibold text-red-400">
             Credit Distribution Mismatch
           </h3>
 
-          <p className="text-red-300 mt-2">
-            Entered Credits : {plannerData.semesterCredits}
-          </p>
+          <div className="mt-4 space-y-2 text-sm sm:text-base text-red-300">
 
-          <p className="text-red-300">
-            Calculated Credits : {calculatedCredits}
-          </p>
+            <p>
+              <span className="font-medium">Entered Credits:</span>{" "}
+              {plannerData.semesterCredits}
+            </p>
 
-          <p className="text-red-300 mt-2">
-            Please update your subject distribution so both values match.
-          </p>
+            <p>
+              <span className="font-medium">Calculated Credits:</span>{" "}
+              {calculatedCredits}
+            </p>
+
+            <p className="pt-2">
+              Please update your subject distribution so both values
+              match before generating recommendations.
+            </p>
+
+          </div>
+
         </div>
+
       )}
 
       {/* Recommendation Style */}
 
-      <RecommendationStyle
-        plannerData={plannerData}
-        setPlannerData={setPlannerData}
-      />
+      <div className="mt-10">
+
+        <RecommendationStyle
+          plannerData={plannerData}
+          setPlannerData={setPlannerData}
+        />
+
+      </div>
 
       {/* Navigation */}
 
-      <div className="mt-12">
+      <div className="mt-10 sm:mt-12">
 
         <NavigationButtons
           showBack

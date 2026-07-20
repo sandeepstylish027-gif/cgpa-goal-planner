@@ -7,27 +7,27 @@ function SGPAStepTwo({
   backStep,
   nextStep,
 }) {
-
   return (
-
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10 shadow-xl">
+    <div className="rounded-3xl border border-slate-700 bg-slate-900 p-6 sm:p-8 lg:p-10 shadow-xl">
 
       <RecommendationStyle
         plannerData={plannerData}
         setPlannerData={setPlannerData}
       />
 
-      <NavigationButtons
-        showBack
-        backStep={backStep}
-        nextStep={nextStep}
-        nextText="Generate Recommendation →"
-      />
+      <div className="mt-10">
+
+        <NavigationButtons
+          showBack
+          backStep={backStep}
+          nextStep={nextStep}
+          nextText="Generate Recommendation →"
+        />
+
+      </div>
 
     </div>
-
   );
-
 }
 
 export default SGPAStepTwo;

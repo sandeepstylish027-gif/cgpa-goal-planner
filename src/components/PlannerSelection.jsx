@@ -6,21 +6,26 @@ function PlannerSelection() {
 
       {/* Heading */}
 
-      <p className="text-blue-400 uppercase tracking-[6px] text-center font-semibold">
-        Academic Planner
-      </p>
+      <div className="text-center">
 
-      <h1 className="text-5xl md:text-6xl font-bold text-center text-white mt-5">
-        Choose Your Planner
-      </h1>
+        <p className="text-blue-400 uppercase tracking-[4px] sm:tracking-[6px] text-xs sm:text-sm font-semibold">
+          Academic Planner
+        </p>
 
-      <p className="text-gray-400 text-center mt-6 text-lg md:text-xl max-w-3xl mx-auto leading-8">
-        Select the planner that best matches your academic goal and let our smart recommendation engine guide you toward success.
-      </p>
+        <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+          Choose Your Planner
+        </h1>
+
+        <p className="mt-6 max-w-3xl mx-auto px-2 text-sm sm:text-lg lg:text-xl leading-7 sm:leading-8 text-gray-400">
+          Select the planner that best matches your academic goal and let our
+          smart recommendation engine guide you toward academic success.
+        </p>
+
+      </div>
 
       {/* Planner Cards */}
 
-      <div className="grid lg:grid-cols-2 gap-10 mt-20">
+      <div className="mt-14 sm:mt-16 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
 
         <PlannerCard
           icon="🎯"

@@ -2,72 +2,95 @@ const About = () => {
   return (
     <section
       id="about"
-      className="py-24 bg-slate-950 text-white"
+      className="bg-slate-950 py-20 sm:py-24 lg:py-28"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="text-center mb-16">
-          <span className="text-cyan-400 font-semibold tracking-widest uppercase">
-            About
+        {/* Heading */}
+
+        <div className="text-center">
+
+          <span className="text-blue-400 uppercase tracking-[4px] sm:tracking-[6px] text-xs sm:text-sm font-semibold">
+            ABOUT
           </span>
 
-          <h2 className="text-4xl md:text-5xl font-bold mt-4">
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
             About VIT AP Grade Recommender
           </h2>
 
-          <p className="text-slate-400 mt-6 max-w-3xl mx-auto text-lg leading-8">
+          <p className="mt-6 max-w-3xl mx-auto text-sm sm:text-base lg:text-lg leading-7 lg:leading-8 text-slate-400">
             VIT AP Grade Recommender is an academic planning tool
             designed specifically for VIT-AP students. It helps
             students calculate the SGPA required to achieve their
-            target CGPA and provides intelligent grade
+            target CGPA while providing intelligent grade
             recommendations based on semester credits.
           </p>
+
         </div>
 
-        <div className="grid md:grid-cols-2 gap-10">
+        {/* Cards */}
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold mb-6 text-cyan-400">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mt-14 sm:mt-16">
+
+          {/* Why */}
+
+          <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-8 transition-all duration-300 hover:border-blue-500/60 hover:-translate-y-1">
+
+            <h3 className="text-xl sm:text-2xl font-bold text-blue-400">
               Why this project?
             </h3>
 
-            <p className="text-slate-300 leading-8">
+            <p className="mt-5 text-sm sm:text-base leading-7 text-slate-300">
               Many students know their current CGPA but struggle to
               understand what SGPA they need in upcoming semesters.
-              This project removes the guesswork by generating a
-              realistic academic plan with personalized grade
+              This planner removes the guesswork by generating a
+              realistic academic roadmap with personalized grade
               recommendations.
             </p>
+
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold mb-6 text-cyan-400">
+          {/* Features */}
+
+          <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-8 transition-all duration-300 hover:border-blue-500/60 hover:-translate-y-1">
+
+            <h3 className="text-xl sm:text-2xl font-bold text-blue-400">
               Core Features
             </h3>
 
-            <ul className="space-y-4 text-slate-300">
+            <ul className="mt-5 space-y-3 text-sm sm:text-base text-slate-300">
+
               <li>🎯 Target CGPA Planning</li>
+
               <li>📈 Required SGPA Calculator</li>
+
               <li>📚 Intelligent Grade Recommendations</li>
+
               <li>⚡ Instant Results</li>
-              <li>📱 Mobile Responsive</li>
-              <li>🚀 Built for VIT-AP Students</li>
+
+              <li>📱 Fully Responsive Design</li>
+
+              <li>🚀 Built Specifically for VIT-AP Students</li>
+
             </ul>
+
           </div>
 
         </div>
 
-        <div className="mt-16 text-center">
+        {/* Developer */}
 
-          <h3 className="text-2xl font-bold">
+        <div className="mt-16 sm:mt-20 rounded-3xl border border-slate-800 bg-slate-900 p-8 text-center">
+
+          <h3 className="text-xl sm:text-2xl font-bold text-white">
             Developed by
           </h3>
 
-          <p className="text-cyan-400 text-xl mt-3 font-semibold">
+          <p className="mt-4 text-xl sm:text-2xl font-semibold text-blue-400">
             Bukke Sandeep Naik
           </p>
 
-          <p className="text-slate-400 mt-2">
+          <p className="mt-2 text-sm sm:text-base text-slate-400">
             B.Tech CSE (AI & ML) • VIT-AP University
           </p>
 

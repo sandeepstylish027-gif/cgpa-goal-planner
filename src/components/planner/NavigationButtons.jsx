@@ -5,22 +5,53 @@ function NavigationButtons({
   showBack = false,
 }) {
   return (
-    <div className="flex justify-between mt-12">
+    <div className="mt-10 sm:mt-12 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-4">
 
       {showBack ? (
         <button
           onClick={backStep}
-          className="px-8 py-4 rounded-xl border border-slate-700 text-white hover:bg-slate-800 transition"
+          className="
+            w-full
+            sm:w-auto
+            px-6
+            py-3.5
+            rounded-xl
+            border
+            border-slate-700
+            bg-slate-900
+            text-white
+            font-medium
+            transition-all
+            duration-300
+            hover:bg-slate-800
+            hover:border-blue-500
+          "
         >
           ← Back
         </button>
       ) : (
-        <div></div>
+        <div className="hidden sm:block" />
       )}
 
       <button
         onClick={nextStep}
-        className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:scale-105 transition"
+        className="
+          w-full
+          sm:w-auto
+          px-8
+          py-3.5
+          rounded-xl
+          bg-gradient-to-r
+          from-blue-500
+          to-purple-600
+          text-white
+          font-semibold
+          shadow-lg
+          transition-all
+          duration-300
+          hover:scale-[1.02]
+          hover:shadow-blue-500/30
+        "
       >
         {nextText}
       </button>

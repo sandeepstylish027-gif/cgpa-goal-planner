@@ -18,7 +18,7 @@ function SGPAPlanner() {
 
     targetSGPA: "",
 
-    semesterCredits: 22,
+    semesterCredits: "",
 
     twoCredits: 2,
 

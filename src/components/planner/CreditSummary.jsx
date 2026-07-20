@@ -2,20 +2,23 @@ function CreditSummary({
   totalCredits,
   calculatedCredits,
 }) {
-
   const difference =
     totalCredits - calculatedCredits;
 
   const matched = difference === 0;
 
   return (
-    <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 mt-10">
+    <div className="rounded-3xl border border-slate-700 bg-slate-900 p-6 sm:p-8">
 
-      <h2 className="text-2xl font-bold text-white">
+      {/* Header */}
+
+      <h2 className="text-2xl sm:text-3xl font-bold text-white">
         Credit Verification
       </h2>
 
-      <div className="mt-8 space-y-5">
+      {/* Summary */}
+
+      <div className="mt-8 space-y-4">
 
         <Row
           title="Entered Credits"
@@ -29,44 +32,44 @@ function CreditSummary({
 
       </div>
 
+      {/* Result */}
+
       <div className="mt-8">
 
         {matched ? (
 
-          <div className="bg-green-500/20 border border-green-500 rounded-2xl p-5">
+          <div className="rounded-2xl border border-green-500 bg-green-500/15 p-5 sm:p-6">
 
-            <h3 className="text-green-400 text-xl font-bold">
-
+            <h3 className="text-lg sm:text-xl font-bold text-green-400">
               ✅ Perfect!
-
             </h3>
 
-            <p className="text-green-300 mt-2">
-
+            <p className="mt-2 text-sm sm:text-base leading-7 text-green-300">
               Your credit distribution is correct.
-
+              You can continue to generate recommendations.
             </p>
 
           </div>
 
         ) : (
 
-          <div className="bg-red-500/20 border border-red-500 rounded-2xl p-5">
+          <div className="rounded-2xl border border-red-500 bg-red-500/15 p-5 sm:p-6">
 
-            <h3 className="text-red-400 text-xl font-bold">
-
+            <h3 className="text-lg sm:text-xl font-bold text-red-400">
               ⚠ Credit Mismatch
-
             </h3>
 
-            <p className="text-red-300 mt-2">
-
+            <p className="mt-2 text-sm sm:text-base leading-7 text-red-300">
               Difference:
-              {" "}
-              {Math.abs(difference)}
-              {" "}
-              Credits
+              <span className="font-semibold">
+                {" "}
+                {Math.abs(difference)} Credits
+              </span>
+            </p>
 
+            <p className="mt-2 text-sm sm:text-base text-red-300">
+              Please adjust the number of subjects until both credit
+              values are equal.
             </p>
 
           </div>
@@ -81,13 +84,13 @@ function CreditSummary({
 
 function Row({ title, value }) {
   return (
-    <div className="flex justify-between items-center bg-slate-800 rounded-xl px-5 py-4">
+    <div className="flex items-center justify-between rounded-xl bg-slate-800 px-5 py-4">
 
-      <span className="text-gray-300">
+      <span className="text-sm sm:text-base text-gray-300">
         {title}
       </span>
 
-      <span className="text-white text-xl font-bold">
+      <span className="text-xl sm:text-2xl font-bold text-white">
         {value}
       </span>
 

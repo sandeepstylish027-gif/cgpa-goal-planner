@@ -21,12 +21,36 @@ function GradeBadge({ grade }) {
   };
 
   return (
+
     <div
-      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border font-semibold ${badgeStyles[grade]}`}
+      className={`
+        inline-flex
+        items-center
+        gap-2
+        rounded-full
+        border
+        px-4
+        py-2
+        text-sm
+        sm:text-base
+        font-semibold
+        transition-all
+        duration-300
+        hover:scale-105
+        ${badgeStyles[grade]}
+      `}
     >
-      <span>{badgeIcons[grade]}</span>
-      <span>{grade}</span>
+
+      <span className="text-base sm:text-lg">
+        {badgeIcons[grade]}
+      </span>
+
+      <span>
+        {grade}
+      </span>
+
     </div>
+
   );
 }
 

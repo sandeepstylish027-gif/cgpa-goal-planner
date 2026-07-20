@@ -24,15 +24,12 @@ function OverallPlanner() {
     // ===================================
     semester: "Semester 5",
 
-    // User enters total semester credits
     semesterCredits: "",
 
-    // Number of subjects
     twoCredits: 0,
     threeCredits: 0,
     fourCredits: 0,
 
-    // Recommendation Style
     recommendationStyle: "balanced",
   });
 
@@ -40,12 +37,12 @@ function OverallPlanner() {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-slate-950 pt-32 pb-20">
-        <div className="max-w-6xl mx-auto px-6">
+      <main className="min-h-screen bg-slate-950 pt-28 sm:pt-32 pb-16 sm:pb-20">
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <PlannerProgress step={step} />
 
-          {/* STEP 1 */}
           {step === 1 && (
             <OverallStepOne
               plannerData={plannerData}
@@ -54,7 +51,6 @@ function OverallPlanner() {
             />
           )}
 
-          {/* STEP 2 */}
           {step === 2 && (
             <OverallStepTwo
               plannerData={plannerData}
@@ -64,7 +60,6 @@ function OverallPlanner() {
             />
           )}
 
-          {/* STEP 3 */}
           {step === 3 && (
             <OverallResult
               plannerData={plannerData}
@@ -73,6 +68,7 @@ function OverallPlanner() {
           )}
 
         </div>
+
       </main>
     </>
   );

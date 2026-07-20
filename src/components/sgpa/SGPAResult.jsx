@@ -1,4 +1,7 @@
-import { generateRecommendation, gradeSummary } from "../../utils/recommendationEngine";
+import {
+  generateRecommendation,
+  gradeSummary,
+} from "../../utils/recommendationEngine";
 
 import ResultCard from "../planner/ResultCard";
 import GradeRecommendation from "../planner/GradeRecommendation";
@@ -22,12 +25,12 @@ function SGPAResult({
 
   return (
 
-    <div>
+    <div className="space-y-8 sm:space-y-10">
 
       <ResultCard
-  requiredSGPA={Number(plannerData.targetSGPA)}
-  expectedCGPA={Number(plannerData.targetSGPA)}
-/>
+        requiredSGPA={Number(plannerData.targetSGPA)}
+        expectedCGPA={Number(plannerData.targetSGPA)}
+      />
 
       <GradeRecommendation
         recommendations={recommendations}
@@ -46,7 +49,6 @@ function SGPAResult({
     </div>
 
   );
-
 }
 
 export default SGPAResult;

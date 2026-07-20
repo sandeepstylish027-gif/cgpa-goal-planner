@@ -28,22 +28,24 @@ function OverallResult({
     requiredSGPA > 10
   ) {
     return (
-      <div className="bg-red-500/10 border border-red-500 rounded-3xl p-8 text-center">
+      <div className="rounded-3xl border border-red-500 bg-red-500/10 p-6 sm:p-8 text-center">
 
-        <h2 className="text-3xl font-bold text-red-400">
-          Target CGPA is not achievable
+        <h2 className="text-2xl sm:text-3xl font-bold text-red-400">
+          Target CGPA is Not Achievable
         </h2>
 
-        <p className="text-gray-300 mt-4">
-          The required SGPA is greater than 10.
-          Please reduce your target CGPA or check your inputs.
+        <p className="mt-4 text-sm sm:text-base leading-7 text-gray-300 max-w-2xl mx-auto">
+          The required SGPA is greater than 10. Please reduce your target
+          CGPA or verify your academic details before trying again.
         </p>
 
-        <NavigationButtons
-          showBack
-          backStep={backStep}
-          nextText="Back"
-        />
+        <div className="mt-8">
+          <NavigationButtons
+            showBack
+            backStep={backStep}
+            nextText="Back"
+          />
+        </div>
 
       </div>
     );
@@ -60,7 +62,7 @@ function OverallResult({
   const summary = gradeSummary(recommendations);
 
   return (
-    <div>
+    <div className="space-y-8 sm:space-y-10">
 
       <ResultCard
         requiredSGPA={requiredSGPA}

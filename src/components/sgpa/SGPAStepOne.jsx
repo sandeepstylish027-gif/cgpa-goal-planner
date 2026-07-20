@@ -7,106 +7,116 @@ function SGPAStepOne({
   setPlannerData,
   nextStep,
 }) {
-
   const calculatedCredits =
     plannerData.twoCredits * 2 +
     plannerData.threeCredits * 3 +
     plannerData.fourCredits * 4;
 
   const isValid =
-    plannerData.semesterCredits === calculatedCredits;
+    Number(plannerData.semesterCredits) === calculatedCredits;
 
   return (
+    <div className="rounded-3xl border border-slate-700 bg-slate-900 p-6 sm:p-8 lg:p-10 shadow-xl">
 
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10 shadow-xl">
+      {/* Heading */}
 
-      <h2 className="text-3xl font-bold text-white">
+      <h2 className="text-2xl sm:text-3xl font-bold text-white">
         Semester SGPA Planner
       </h2>
 
-      <p className="text-gray-400 mt-2">
+      <p className="mt-3 text-sm sm:text-base text-gray-400">
         Enter your semester details to generate the required grade recommendation.
       </p>
 
-      {/* Semester */}
+      {/* Form */}
 
-      <div className="mt-10">
+      <div className="mt-10 space-y-8">
 
-        <label className="block text-gray-300 mb-3">
-          Semester
-        </label>
+        {/* Semester */}
 
-        <select
-          value={plannerData.semester}
-          onChange={(e) =>
-            setPlannerData((prev) => ({
-              ...prev,
-              semester: e.target.value,
-            }))
-          }
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white"
-        >
-          <option>Semester 1</option>
-          <option>Semester 2</option>
-          <option>Semester 3</option>
-          <option>Semester 4</option>
-          <option>Semester 5</option>
-          <option>Semester 6</option>
-          <option>Semester 7</option>
-          <option>Semester 8</option>
-        </select>
+        <div>
 
-      </div>
+          <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
+            Semester
+          </label>
 
-      {/* Target SGPA */}
+          <select
+            value={plannerData.semester}
+            onChange={(e) =>
+              setPlannerData((prev) => ({
+                ...prev,
+                semester: e.target.value,
+              }))
+            }
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30"
+          >
+            <option>Semester 1</option>
+            <option>Semester 2</option>
+            <option>Semester 3</option>
+            <option>Semester 4</option>
+            <option>Semester 5</option>
+            <option>Semester 6</option>
+            <option>Semester 7</option>
+            <option>Semester 8</option>
+          </select>
 
-      <div className="mt-8">
+        </div>
 
-        <label className="block text-gray-300 mb-3">
-          Target SGPA
-        </label>
+        {/* Target SGPA */}
 
-        <input
-          type="number"
-          step="0.01"
-          placeholder="Example: 9.25"
-          value={plannerData.targetSGPA}
-          onChange={(e) =>
-            setPlannerData((prev) => ({
-              ...prev,
-              targetSGPA: e.target.value,
-            }))
-          }
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white"
-        />
+        <div>
 
-      </div>
+          <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
+            Target SGPA
+          </label>
 
-      {/* Semester Credits */}
+          <input
+            type="number"
+            step="0.01"
+            placeholder="Enter your target SGPA"
+            value={plannerData.targetSGPA}
+            onChange={(e) =>
+              setPlannerData((prev) => ({
+                ...prev,
+                targetSGPA: e.target.value,
+              }))
+            }
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white placeholder-gray-500 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30"
+          />
 
-      <div className="mt-8">
+        </div>
 
-        <label className="block text-gray-300 mb-3">
-          Total Semester Credits
-        </label>
+        {/* Semester Credits */}
 
-        <input
-          type="number"
-          value={plannerData.semesterCredits}
-          onChange={(e) =>
-            setPlannerData((prev) => ({
-              ...prev,
-              semesterCredits: Number(e.target.value),
-            }))
-          }
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white"
-        />
+        <div>
+
+          <label className="mb-3 block text-sm sm:text-base font-medium text-gray-300">
+            Total Semester Credits
+          </label>
+
+          <input
+            type="number"
+            placeholder="Enter current semester credits"
+            value={plannerData.semesterCredits}
+            onChange={(e) =>
+              setPlannerData((prev) => ({
+                ...prev,
+                semesterCredits:
+                  e.target.value === ""
+                    ? ""
+                    : Number(e.target.value),
+              }))
+            }
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-5 py-4 text-white placeholder-gray-500 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30"
+          />
+
+        </div>
 
       </div>
 
       {/* Credit Counters */}
 
-      <div className="grid md:grid-cols-3 gap-6 mt-10">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
 
         <CreditCounter
           title="2 Credit Subjects"
@@ -146,33 +156,42 @@ function SGPAStepOne({
       {/* Credit Summary */}
 
       <CreditSummary
-        totalCredits={plannerData.semesterCredits}
+        totalCredits={Number(plannerData.semesterCredits) || 0}
         calculatedCredits={calculatedCredits}
       />
 
-      {!isValid && (
-        <div className="mt-8 bg-red-500/10 border border-red-500 rounded-2xl p-5">
+      {/* Validation */}
 
-          <h3 className="text-red-400 font-semibold">
+      {!isValid && plannerData.semesterCredits !== "" && (
+
+        <div className="mt-8 rounded-2xl border border-red-500 bg-red-500/10 p-5 sm:p-6">
+
+          <h3 className="text-lg font-semibold text-red-400">
             ⚠ Credit Distribution Mismatch
           </h3>
 
-          <p className="text-red-300 mt-2">
+          <p className="mt-2 text-sm sm:text-base leading-7 text-red-300">
             The total semester credits do not match the calculated credits.
+            Please adjust the number of subjects until both values are equal.
           </p>
 
         </div>
+
       )}
 
-      <NavigationButtons
-        nextStep={nextStep}
-        nextText="Recommendation Style →"
-      />
+      {/* Navigation */}
+
+      <div className="mt-10">
+
+        <NavigationButtons
+          nextStep={nextStep}
+          nextText="Recommendation Style →"
+        />
+
+      </div>
 
     </div>
-
   );
-
 }
 
 export default SGPAStepOne;

@@ -10,7 +10,6 @@ import FeatureCard from "./FeatureCard";
 import FeatureModal from "./FeatureModal";
 
 function Features() {
-
   const [selectedFeature, setSelectedFeature] = useState(null);
 
   const features = [
@@ -29,7 +28,6 @@ function Features() {
       example:
         "If your current CGPA is 8.50 and your target is 9.00, the planner calculates the SGPA required in each remaining semester.",
     },
-
     {
       title: "Semester Planner",
       icon: <FaCalendarAlt />,
@@ -45,7 +43,6 @@ function Features() {
       example:
         "Allocate 22 credits this semester and instantly see how it affects your overall CGPA.",
     },
-
     {
       title: "Grade Recommendation",
       icon: <FaGraduationCap />,
@@ -61,7 +58,6 @@ function Features() {
       example:
         "The recommendation engine suggests the best combination of S, A, B, and C grades based on your target CGPA.",
     },
-
     {
       title: "Progress Analytics",
       icon: <FaChartLine />,
@@ -81,30 +77,43 @@ function Features() {
 
   return (
     <>
-      <section id="features" className="bg-slate-950 py-28">
+      <section
+        id="features"
+        className="bg-slate-950 py-20 sm:py-24 lg:py-28"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Section Badge */}
 
-          <p className="text-blue-400 uppercase tracking-[6px] text-center font-semibold">
+          <p className="text-blue-400 uppercase tracking-[4px] sm:tracking-[6px] text-center font-semibold text-xs sm:text-sm">
             FEATURES
           </p>
 
-          <h2 className="text-4xl lg:text-5xl font-bold text-center text-white mt-4">
-            Powerful Features to Plan Better
+          {/* Heading */}
+
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white leading-tight">
+            Powerful Features to
+            <br className="sm:hidden" /> Plan Better
           </h2>
 
-          <p className="text-gray-400 text-center mt-5 text-lg">
-            Everything you need to achieve your academic goals.
+          {/* Subtitle */}
+
+          <p className="mt-5 max-w-2xl mx-auto text-center text-sm sm:text-base lg:text-lg text-gray-400 leading-7">
+            Everything you need to achieve your academic goals with
+            intelligent planning, accurate predictions, and personalized
+            recommendations.
           </p>
 
-          <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-8 mt-20">
+          {/* Cards */}
+
+          <div className="mt-14 sm:mt-16 lg:mt-20 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
 
             {features.map((feature) => (
               <FeatureCard
                 key={feature.title}
                 icon={
                   <div
-                    className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl ${feature.iconBg}`}
+                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl ${feature.iconBg}`}
                   >
                     {feature.icon}
                   </div>
@@ -116,17 +125,15 @@ function Features() {
             ))}
 
           </div>
-
         </div>
-
       </section>
 
       {selectedFeature && (
-  <FeatureModal
-    feature={selectedFeature}
-    onClose={() => setSelectedFeature(null)}
-  />
-)}
+        <FeatureModal
+          feature={selectedFeature}
+          onClose={() => setSelectedFeature(null)}
+        />
+      )}
     </>
   );
 }

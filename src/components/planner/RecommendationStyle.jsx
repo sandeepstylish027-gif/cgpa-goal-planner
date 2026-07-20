@@ -42,17 +42,21 @@ function RecommendationStyle({
   ];
 
   return (
-    <div className="mt-14">
+    <div className="mt-12 sm:mt-14">
 
-      <h2 className="text-3xl font-bold text-white">
+      {/* Heading */}
+
+      <h2 className="text-2xl sm:text-3xl font-bold text-white">
         Recommendation Style
       </h2>
 
-      <p className="text-gray-400 mt-3">
+      <p className="mt-3 text-sm sm:text-base text-gray-400">
         Select how you want your grade recommendation to be generated.
       </p>
 
-      <div className="grid lg:grid-cols-2 gap-6 mt-8">
+      {/* Cards */}
+
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
 
         {options.map((option) => {
 
@@ -69,38 +73,37 @@ function RecommendationStyle({
                   recommendationStyle: option.id,
                 }))
               }
-              className={`relative text-left rounded-3xl p-7 border transition-all duration-300 hover:-translate-y-1
-              ${
+              className={`relative rounded-3xl border p-6 sm:p-7 text-left transition-all duration-300 hover:-translate-y-1 ${
                 selected
-                  ? "border-blue-500 bg-blue-500/10 shadow-[0_0_30px_rgba(59,130,246,0.25)]"
+                  ? "border-blue-500 bg-blue-500/10 shadow-[0_0_35px_rgba(59,130,246,0.22)]"
                   : "border-slate-700 bg-slate-800 hover:border-blue-400"
               }`}
             >
 
               {selected && (
-                <div className="absolute top-5 right-5">
+                <div className="absolute right-5 top-5">
 
-                  <FaCheckCircle className="text-green-400 text-2xl" />
+                  <FaCheckCircle className="text-2xl text-green-400" />
 
                 </div>
               )}
 
-              <div className="flex items-center gap-5">
+              <div className="flex items-start gap-4">
 
-                {option.icon}
+                <div className="flex-shrink-0">
+
+                  {option.icon}
+
+                </div>
 
                 <div>
 
-                  <h3 className="text-2xl font-bold text-white">
-
+                  <h3 className="text-xl sm:text-2xl font-bold text-white">
                     {option.title}
-
                   </h3>
 
-                  <p className="text-gray-400 mt-2 leading-7">
-
+                  <p className="mt-2 text-sm sm:text-base leading-7 text-gray-400">
                     {option.description}
-
                   </p>
 
                 </div>
@@ -114,15 +117,15 @@ function RecommendationStyle({
 
       </div>
 
-      <div className="mt-8 rounded-2xl bg-slate-800 border border-slate-700 p-6">
+      {/* Selected */}
 
-        <h3 className="text-lg font-semibold text-blue-400">
+      <div className="mt-8 rounded-2xl border border-slate-700 bg-slate-800 p-5 sm:p-6">
 
+        <h3 className="text-base sm:text-lg font-semibold text-blue-400">
           Selected Strategy
-
         </h3>
 
-        <p className="text-white text-xl mt-2 capitalize">
+        <p className="mt-2 text-lg sm:text-xl font-semibold text-white capitalize">
 
           {plannerData.recommendationStyle === "high"
             ? "⭐ High Achievement"

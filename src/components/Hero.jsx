@@ -5,18 +5,26 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="bg-slate-950 min-h-screen flex items-center pt-24 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto w-full px-6 lg:px-10">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
+    <section className="relative bg-slate-950 overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/10 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-0 right-0 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-purple-600/10 blur-[120px] rounded-full"></div>
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 lg:pt-36 lg:pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
           {/* LEFT */}
-          <div className="w-full lg:w-1/2 text-center lg:text-left">
+          <div className="order-2 lg:order-1 text-center lg:text-left">
 
-            <div className="inline-flex items-center px-4 lg:px-5 py-2 rounded-full bg-slate-900 border border-slate-700 text-blue-400 mb-8 text-sm lg:text-base">
+            {/* Badge */}
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-900/80 border border-slate-700 text-blue-400 text-sm font-medium">
               🎓 Built for Students. Designed for Success.
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight">
+            {/* Main Heading */}
+            <h1 className="mt-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
               <span className="text-white">
                 Smart Academic
               </span>
@@ -28,7 +36,8 @@ function Hero() {
               </span>
             </h1>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-8 leading-tight">
+            {/* Secondary Heading */}
+            <h2 className="mt-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white">
               Plan Today.
               <br />
               Graduate with
@@ -38,23 +47,26 @@ function Hero() {
               </span>
             </h2>
 
-            <p className="text-gray-400 text-base lg:text-lg mt-8 leading-8 max-w-xl mx-auto lg:mx-0">
-              Set your target CGPA, plan every semester,
-              calculate required grades and confidently
-              achieve your academic goals with our smart planner.
+            {/* Description */}
+            <p className="mt-6 text-sm sm:text-base lg:text-lg leading-7 text-slate-400 max-w-xl mx-auto lg:mx-0">
+              Set your target CGPA, plan every semester, calculate the
+              required grades, and confidently achieve your academic goals
+              with our intelligent planner built specifically for VIT-AP
+              students.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-5 mt-12 justify-center lg:justify-start">
+            {/* Buttons */}
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
 
               <button
                 onClick={() => navigate("/planner")}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-4 rounded-xl font-semibold hover:scale-105 transition duration-300 shadow-lg"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 font-semibold text-white shadow-lg hover:scale-105 transition-all duration-300"
               >
-                Start Planning →
+                🚀 Start Planning
               </button>
 
               <button
-                className="border border-slate-700 px-8 py-4 rounded-xl hover:bg-slate-800 transition duration-300"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl border border-slate-700 text-white hover:bg-slate-800 transition-all duration-300"
               >
                 Learn More
               </button>
@@ -64,12 +76,11 @@ function Hero() {
           </div>
 
           {/* RIGHT */}
+          <div className="order-1 lg:order-2 flex justify-center items-center">
 
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end relative">
-
-            <div className="absolute w-72 h-72 lg:w-[450px] lg:h-[450px] bg-blue-500/20 blur-[180px] rounded-full"></div>
-
-            <DashboardPreview />
+            <div className="w-full max-w-[650px]">
+              <DashboardPreview />
+            </div>
 
           </div>
 
