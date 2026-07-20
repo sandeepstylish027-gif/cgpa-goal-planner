@@ -23,7 +23,6 @@ function OverallPlanner() {
     // STEP 2
     // ===================================
     semester: "Semester 5",
-
     semesterCredits: "",
 
     twoCredits: 0,
@@ -32,6 +31,18 @@ function OverallPlanner() {
 
     recommendationStyle: "balanced",
   });
+
+  // Navigate between steps and always scroll to the top
+  const goToStep = (newStep) => {
+    setStep(newStep);
+
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  };
 
   return (
     <>
@@ -47,7 +58,7 @@ function OverallPlanner() {
             <OverallStepOne
               plannerData={plannerData}
               setPlannerData={setPlannerData}
-              nextStep={() => setStep(2)}
+              nextStep={() => goToStep(2)}
             />
           )}
 
@@ -55,15 +66,15 @@ function OverallPlanner() {
             <OverallStepTwo
               plannerData={plannerData}
               setPlannerData={setPlannerData}
-              backStep={() => setStep(1)}
-              nextStep={() => setStep(3)}
+              backStep={() => goToStep(1)}
+              nextStep={() => goToStep(3)}
             />
           )}
 
           {step === 3 && (
             <OverallResult
               plannerData={plannerData}
-              backStep={() => setStep(2)}
+              backStep={() => goToStep(2)}
             />
           )}
 
