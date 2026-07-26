@@ -5,38 +5,46 @@ function TrendChart() {
         CGPA Trend
       </h3>
 
-      <div className="h-48 flex items-center justify-center">
+      <div className="h-48">
         <svg
           viewBox="0 0 300 160"
           className="w-full h-full"
           preserveAspectRatio="none"
         >
-          {/* Grid */}
-          <line x1="20" y1="140" x2="280" y2="140" stroke="#475569" />
-          <line x1="20" y1="20" x2="20" y2="140" stroke="#475569" />
+          {/* Axes */}
+          <line x1="30" y1="140" x2="280" y2="140" stroke="#475569" />
+          <line x1="30" y1="20" x2="30" y2="140" stroke="#475569" />
 
           {/* Trend Line */}
           <polyline
             fill="none"
             stroke="#3b82f6"
-            strokeWidth="4"
+            strokeWidth="3"
             points="
-              20,120
+              30,120
               70,105
-              120,90
-              170,70
-              220,45
-              280,25
+              110,90
+              150,70
+              200,45
+              270,25
             "
           />
 
           {/* Points */}
-          <circle cx="20" cy="120" r="4" fill="#3b82f6" />
-          <circle cx="70" cy="105" r="4" fill="#3b82f6" />
-          <circle cx="120" cy="90" r="4" fill="#3b82f6" />
-          <circle cx="170" cy="70" r="4" fill="#3b82f6" />
-          <circle cx="220" cy="45" r="4" fill="#3b82f6" />
-          <circle cx="280" cy="25" r="4" fill="#3b82f6" />
+          <circle cx="30" cy="120" r="3" fill="#3b82f6" />
+          <circle cx="70" cy="105" r="3" fill="#3b82f6" />
+          <circle cx="110" cy="90" r="3" fill="#3b82f6" />
+          <circle cx="150" cy="70" r="3" fill="#3b82f6" />
+          <circle cx="200" cy="45" r="3" fill="#3b82f6" />
+          <circle cx="270" cy="25" r="3" fill="#3b82f6" />
+
+          {/* X-Axis Labels */}
+          <text x="30" y="155" textAnchor="middle" fill="#94a3b8" fontSize="10">S1</text>
+          <text x="70" y="155" textAnchor="middle" fill="#94a3b8" fontSize="10">S2</text>
+          <text x="110" y="155" textAnchor="middle" fill="#94a3b8" fontSize="10">S3</text>
+          <text x="150" y="155" textAnchor="middle" fill="#94a3b8" fontSize="10">S4</text>
+          <text x="200" y="155" textAnchor="middle" fill="#94a3b8" fontSize="10">S5</text>
+          <text x="270" y="155" textAnchor="middle" fill="#94a3b8" fontSize="10">S6</text>
         </svg>
       </div>
     </div>
